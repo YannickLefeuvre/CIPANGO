@@ -12,6 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "contenu")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Contenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -174,7 +175,7 @@ public class Contenu implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Contenu{" +
+        return "Maison{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
             ", icone='" + getIcone() + "'" +

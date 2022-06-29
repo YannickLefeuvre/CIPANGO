@@ -20,6 +20,7 @@ export class FilmUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    nom: [],
     images: [],
     imagesContentType: [],
     description: [],
@@ -51,7 +52,7 @@ export class FilmUpdateComponent implements OnInit {
   setFileData(event: Event, field: string, isImage: boolean): void {
     this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
       error: (err: FileLoadError) =>
-        this.eventManager.broadcast(new EventWithContent<AlertError>('cipangoApp.error', { ...err, key: 'error.file.' + err.key })),
+        this.eventManager.broadcast(new EventWithContent<AlertError>('mobbApp.error', { ...err, key: 'error.file.' + err.key })),
     });
   }
 
@@ -101,6 +102,7 @@ export class FilmUpdateComponent implements OnInit {
   protected updateForm(film: IFilm): void {
     this.editForm.patchValue({
       id: film.id,
+      nom: film.nom,
       images: film.images,
       imagesContentType: film.imagesContentType,
       description: film.description,
@@ -111,6 +113,7 @@ export class FilmUpdateComponent implements OnInit {
     return {
       ...new Film(),
       id: this.editForm.get(['id'])!.value,
+      nom: this.editForm.get(['nom'])!.value,
       imagesContentType: this.editForm.get(['imagesContentType'])!.value,
       images: this.editForm.get(['images'])!.value,
       description: this.editForm.get(['description'])!.value,

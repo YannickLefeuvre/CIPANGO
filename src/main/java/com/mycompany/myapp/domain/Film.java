@@ -2,6 +2,7 @@ package com.mycompany.myapp.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -11,15 +12,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "film")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Film implements Serializable {
+@PrimaryKeyJoinColumn(name = "ID")
+public class Film extends Contenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id")
-    private Long id;
 
     @Lob
     @Column(name = "images")
@@ -33,17 +29,14 @@ public class Film implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
-        return this.id;
-    }
-
     public Film id(Long id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Film nom(String nom) {
+        this.setNom(nom);
+        return this;
     }
 
     public byte[] getImages() {
@@ -95,7 +88,7 @@ public class Film implements Serializable {
         if (!(o instanceof Film)) {
             return false;
         }
-        return id != null && id.equals(((Film) o).id);
+        return this.getId() != null && this.getId().equals(((Film) o).getId());
     }
 
     @Override
@@ -109,6 +102,7 @@ public class Film implements Serializable {
     public String toString() {
         return "Film{" +
             "id=" + getId() +
+            ", nom='" + getNom() + "'" +
             ", images='" + getImages() + "'" +
             ", imagesContentType='" + getImagesContentType() + "'" +
             ", description='" + getDescription() + "'" +
