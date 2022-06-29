@@ -1,0 +1,33 @@
+{
+  "cipangoApp": {
+    "contenant": {
+      "home": {
+        "title": "Contenants",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Contenant",
+        "createOrEditLabel": "Create or edit a Contenant",
+        "notFound": "No Contenants found"
+      },
+      "created": "A new Contenant is created with identifier {{ param }}",
+      "updated": "A Contenant is updated with identifier {{ param }}",
+      "deleted": "A Contenant is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Contenant {{ id }}?"
+      },
+      "detail": {
+        "title": "Contenant"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "isCapital": "Is Capital",
+      "icone": "Icone",
+      "absisce": "Absisce",
+      "ordonnee": "Ordonnee",
+      "arriereplan": "Arriereplan",
+      "lien": "Lien",
+      "maison": "Maison",
+      "lienOrigine": "Lien Origine",
+      "lienCible": "Lien Cible"
+    }
+  }
+}

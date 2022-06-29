@@ -1,0 +1,118 @@
+<div>
+  <h2 id="page-heading" data-cy="ContenantHeading">
+    <span jhiTranslate="cipangoApp.contenant.home.title">Contenants</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="cipangoApp.contenant.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-contenant"
+        [routerLink]="['/contenant/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="cipangoApp.contenant.home.createLabel"> Create a new Contenant </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="contenants?.length === 0">
+    <span jhiTranslate="cipangoApp.contenant.home.notFound">No contenants found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="contenants && contenants.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.nom">Nom</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.isCapital">Is Capital</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.icone">Icone</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.absisce">Absisce</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.ordonnee">Ordonnee</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.arriereplan">Arriereplan</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.lien">Lien</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenant.maison">Maison</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contenant of contenants; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/contenant', contenant.id, 'view']">{{ contenant.id }}</a>
+          </td>
+          <td>{{ contenant.nom }}</td>
+          <td>{{ contenant.isCapital }}</td>
+          <td>
+            <a *ngIf="contenant.icone" (click)="openFile(contenant.icone, contenant.iconeContentType)">
+              <img
+                [src]="'data:' + contenant.iconeContentType + ';base64,' + contenant.icone"
+                style="max-height: 30px"
+                alt="contenant image"
+              />
+            </a>
+            <span *ngIf="contenant.icone">{{ contenant.iconeContentType }}, {{ byteSize(contenant.icone) }}</span>
+          </td>
+          <td>{{ contenant.absisce }}</td>
+          <td>{{ contenant.ordonnee }}</td>
+          <td>
+            <a *ngIf="contenant.arriereplan" (click)="openFile(contenant.arriereplan, contenant.arriereplanContentType)">
+              <img
+                [src]="'data:' + contenant.arriereplanContentType + ';base64,' + contenant.arriereplan"
+                style="max-height: 30px"
+                alt="contenant image"
+              />
+            </a>
+            <span *ngIf="contenant.arriereplan">{{ contenant.arriereplanContentType }}, {{ byteSize(contenant.arriereplan) }}</span>
+          </td>
+          <td>
+            <div *ngIf="contenant.lien">
+              <a [routerLink]="['/lien', contenant.lien?.id, 'view']">{{ contenant.lien?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="contenant.maison">
+              <a [routerLink]="['/contenu', contenant.maison?.id, 'view']">{{ contenant.maison?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/contenant', contenant.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/contenant', contenant.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(contenant)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

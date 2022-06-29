@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="contenu">
+      <h2 data-cy="contenuDetailsHeading"><span jhiTranslate="cipangoApp.contenu.detail.title">Contenu</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ contenu.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="cipangoApp.contenu.nom">Nom</span></dt>
+        <dd>
+          <span>{{ contenu.nom }}</span>
+        </dd>
+        <dt><span jhiTranslate="cipangoApp.contenu.icone">Icone</span></dt>
+        <dd>
+          <div *ngIf="contenu.icone">
+            <a (click)="openFile(contenu.icone, contenu.iconeContentType)">
+              <img [src]="'data:' + contenu.iconeContentType + ';base64,' + contenu.icone" style="max-width: 100%" alt="contenu image" />
+            </a>
+            {{ contenu.iconeContentType }}, {{ byteSize(contenu.icone) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="cipangoApp.contenu.absisce">Absisce</span></dt>
+        <dd>
+          <span>{{ contenu.absisce }}</span>
+        </dd>
+        <dt><span jhiTranslate="cipangoApp.contenu.ordonnee">Ordonnee</span></dt>
+        <dd>
+          <span>{{ contenu.ordonnee }}</span>
+        </dd>
+        <dt><span jhiTranslate="cipangoApp.contenu.arriereplan">Arriereplan</span></dt>
+        <dd>
+          <div *ngIf="contenu.arriereplan">
+            <a (click)="openFile(contenu.arriereplan, contenu.arriereplanContentType)">
+              <img
+                [src]="'data:' + contenu.arriereplanContentType + ';base64,' + contenu.arriereplan"
+                style="max-width: 100%"
+                alt="contenu image"
+              />
+            </a>
+            {{ contenu.arriereplanContentType }}, {{ byteSize(contenu.arriereplan) }}
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/contenu', contenu.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

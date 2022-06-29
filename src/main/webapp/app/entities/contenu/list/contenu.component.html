@@ -1,0 +1,100 @@
+<div>
+  <h2 id="page-heading" data-cy="ContenuHeading">
+    <span jhiTranslate="cipangoApp.contenu.home.title">Contenus</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="cipangoApp.contenu.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-contenu"
+        [routerLink]="['/contenu/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="cipangoApp.contenu.home.createLabel"> Create a new Contenu </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="contenus?.length === 0">
+    <span jhiTranslate="cipangoApp.contenu.home.notFound">No contenus found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="contenus && contenus.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenu.nom">Nom</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenu.icone">Icone</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenu.absisce">Absisce</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenu.ordonnee">Ordonnee</span></th>
+          <th scope="col"><span jhiTranslate="cipangoApp.contenu.arriereplan">Arriereplan</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contenu of contenus; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/contenu', contenu.id, 'view']">{{ contenu.id }}</a>
+          </td>
+          <td>{{ contenu.nom }}</td>
+          <td>
+            <a *ngIf="contenu.icone" (click)="openFile(contenu.icone, contenu.iconeContentType)">
+              <img [src]="'data:' + contenu.iconeContentType + ';base64,' + contenu.icone" style="max-height: 30px" alt="contenu image" />
+            </a>
+            <span *ngIf="contenu.icone">{{ contenu.iconeContentType }}, {{ byteSize(contenu.icone) }}</span>
+          </td>
+          <td>{{ contenu.absisce }}</td>
+          <td>{{ contenu.ordonnee }}</td>
+          <td>
+            <a *ngIf="contenu.arriereplan" (click)="openFile(contenu.arriereplan, contenu.arriereplanContentType)">
+              <img
+                [src]="'data:' + contenu.arriereplanContentType + ';base64,' + contenu.arriereplan"
+                style="max-height: 30px"
+                alt="contenu image"
+              />
+            </a>
+            <span *ngIf="contenu.arriereplan">{{ contenu.arriereplanContentType }}, {{ byteSize(contenu.arriereplan) }}</span>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/contenu', contenu.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/contenu', contenu.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(contenu)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

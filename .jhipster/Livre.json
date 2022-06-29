@@ -1,0 +1,25 @@
+{
+  "applications": ["CIPANGO"],
+  "changelogDate": "20220629184636",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "livre",
+  "fields": [
+    {
+      "fieldName": "images",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Livre",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

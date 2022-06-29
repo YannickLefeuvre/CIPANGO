@@ -1,0 +1,25 @@
+{
+  "applications": ["CIPANGO"],
+  "changelogDate": "20220629184736",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "album_photo",
+  "fields": [
+    {
+      "fieldName": "images",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AlbumPhoto",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

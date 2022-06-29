@@ -1,0 +1,11 @@
+id;nom;is_capital;icone;icone_content_type;absisce;ordonnee;arriereplan;arriereplan_content_type
+1;Associate black;true;../fake-data/blob/hipster.png;image/png;89921;92241;../fake-data/blob/hipster.png;image/png
+2;Alaska Cotton Designer;true;../fake-data/blob/hipster.png;image/png;58624;66403;../fake-data/blob/hipster.png;image/png
+3;Well;true;../fake-data/blob/hipster.png;image/png;93388;5392;../fake-data/blob/hipster.png;image/png
+4;Buckinghamshire Berkshire Lempira;true;../fake-data/blob/hipster.png;image/png;37176;17551;../fake-data/blob/hipster.png;image/png
+5;up;false;../fake-data/blob/hipster.png;image/png;36629;57744;../fake-data/blob/hipster.png;image/png
+6;monitor;true;../fake-data/blob/hipster.png;image/png;59480;36308;../fake-data/blob/hipster.png;image/png
+7;e-markets copying;true;../fake-data/blob/hipster.png;image/png;2496;83485;../fake-data/blob/hipster.png;image/png
+8;Steel Rubber;false;../fake-data/blob/hipster.png;image/png;48075;75694;../fake-data/blob/hipster.png;image/png
+9;infomediaries boliviano Universal;false;../fake-data/blob/hipster.png;image/png;41094;47321;../fake-data/blob/hipster.png;image/png
+10;Vision-oriented Multi-layered Sleek;true;../fake-data/blob/hipster.png;image/png;26738;93623;../fake-data/blob/hipster.png;image/png
