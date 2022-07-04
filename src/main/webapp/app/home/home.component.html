@@ -32,6 +32,10 @@
 
     <p jhiTranslate="home.question">If you have any question on JHipster:</p>
 
+    <div *ngFor="let contenu of contenus">
+      <li>{{ contenu.nom }}</li>
+    </div>
+
     <ul>
       <li>
         <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage"
