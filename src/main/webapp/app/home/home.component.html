@@ -32,8 +32,8 @@
 
     <p jhiTranslate="home.question">If you have any question on JHipster:</p>
 
-    <div *ngFor="let contenu of contenus">
-      <li>{{ contenu.nom }}</li>
+    <div *ngFor="let contenant of contenants">
+      <a [routerLink]="['/contenant', contenant.id, 'systeme']">{{ contenant.nom }}</a>
     </div>
 
     <ul>

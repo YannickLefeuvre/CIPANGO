@@ -6,6 +6,7 @@ import { ContenantComponent } from '../list/contenant.component';
 import { ContenantDetailComponent } from '../detail/contenant-detail.component';
 import { ContenantUpdateComponent } from '../update/contenant-update.component';
 import { ContenantRoutingResolveService } from './contenant-routing-resolve.service';
+import { SystemeComponent } from '../systeme/systeme.component';
 
 const contenantRoute: Routes = [
   {
@@ -32,6 +33,14 @@ const contenantRoute: Routes = [
   {
     path: ':id/edit',
     component: ContenantUpdateComponent,
+    resolve: {
+      contenant: ContenantRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/systeme',
+    component: SystemeComponent,
     resolve: {
       contenant: ContenantRoutingResolveService,
     },

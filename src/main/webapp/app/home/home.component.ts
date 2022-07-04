@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IContenu } from '../entities/contenu/contenu.model';
-import { ContenuService } from '../entities/contenu/service/contenu.service';
+import { IContenant } from '../entities/contenant/contenant.model';
+import { ContenantService } from '../entities/contenant/service/contenant.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { HttpResponse } from '@angular/common/http';
@@ -19,14 +19,14 @@ import { Account } from 'app/core/auth/account.model';
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
 
-  contenus?: IContenu[];
+  contenants?: IContenant[];
   isLoading = false;
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private accountService: AccountService,
-    protected contenuService: ContenuService,
+    protected contenantsService: ContenantService,
     protected dataUtils: DataUtils,
     protected modalService: NgbModal,
     private router: Router
@@ -43,10 +43,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadAll(): void {
     this.isLoading = true;
 
-    this.contenuService.query().subscribe({
-      next: (res: HttpResponse<IContenu[]>) => {
+    this.contenantsService.query().subscribe({
+      next: (res: HttpResponse<IContenant[]>) => {
         this.isLoading = false;
-        this.contenus = res.body ?? [];
+        this.contenants = res.body ?? [];
       },
       error: () => {
         this.isLoading = false;
