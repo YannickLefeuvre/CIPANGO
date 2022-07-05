@@ -117,6 +117,21 @@
             formControlName="arriereplanContentType"
           />
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="cipangoApp.contenu.contenantino" for="field_contenantino">Contenantino</label>
+          <select class="form-control" id="field_contenantino" data-cy="contenantino" name="contenantino" formControlName="contenantino">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                contenantOption.id === editForm.get('contenantino')!.value?.id ? editForm.get('contenantino')!.value : contenantOption
+              "
+              *ngFor="let contenantOption of contenantsSharedCollection; trackBy: trackContenantById"
+            >
+              {{ contenantOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

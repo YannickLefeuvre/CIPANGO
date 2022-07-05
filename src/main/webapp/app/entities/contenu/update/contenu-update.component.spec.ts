@@ -8,6 +8,8 @@ import { of, Subject, from } from 'rxjs';
 
 import { ContenuService } from '../service/contenu.service';
 import { IContenu, Contenu } from '../contenu.model';
+import { IContenant } from 'app/entities/contenant/contenant.model';
+import { ContenantService } from 'app/entities/contenant/service/contenant.service';
 
 import { ContenuUpdateComponent } from './contenu-update.component';
 
@@ -16,6 +18,7 @@ describe('Contenu Management Update Component', () => {
   let fixture: ComponentFixture<ContenuUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let contenuService: ContenuService;
+  let contenantService: ContenantService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -37,18 +40,41 @@ describe('Contenu Management Update Component', () => {
     fixture = TestBed.createComponent(ContenuUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     contenuService = TestBed.inject(ContenuService);
+    contenantService = TestBed.inject(ContenantService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call Contenant query and add missing value', () => {
+      const contenu: IContenu = { id: 456 };
+      const contenantino: IContenant = { id: 17018 };
+      contenu.contenantino = contenantino;
+
+      const contenantCollection: IContenant[] = [{ id: 38476 }];
+      jest.spyOn(contenantService, 'query').mockReturnValue(of(new HttpResponse({ body: contenantCollection })));
+      const additionalContenants = [contenantino];
+      const expectedCollection: IContenant[] = [...additionalContenants, ...contenantCollection];
+      jest.spyOn(contenantService, 'addContenantToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ contenu });
+      comp.ngOnInit();
+
+      expect(contenantService.query).toHaveBeenCalled();
+      expect(contenantService.addContenantToCollectionIfMissing).toHaveBeenCalledWith(contenantCollection, ...additionalContenants);
+      expect(comp.contenantsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const contenu: IContenu = { id: 456 };
+      const contenantino: IContenant = { id: 94428 };
+      contenu.contenantino = contenantino;
 
       activatedRoute.data = of({ contenu });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(contenu));
+      expect(comp.contenantsSharedCollection).toContain(contenantino);
     });
   });
 
@@ -113,6 +139,16 @@ describe('Contenu Management Update Component', () => {
       expect(contenuService.update).toHaveBeenCalledWith(contenu);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Tracking relationships identifiers', () => {
+    describe('trackContenantById', () => {
+      it('Should return tracked Contenant primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackContenantById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
     });
   });
 });

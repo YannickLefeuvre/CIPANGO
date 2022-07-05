@@ -34,6 +34,13 @@
   "name": "Contenu",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "contenant",
+      "relationshipName": "contenantino",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "no"
 }

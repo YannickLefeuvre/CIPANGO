@@ -1,3 +1,5 @@
+import { IContenant } from 'app/entities/contenant/contenant.model';
+
 export interface IContenu {
   id?: number;
   nom?: string;
@@ -7,6 +9,7 @@ export interface IContenu {
   ordonnee?: number | null;
   arriereplanContentType?: string | null;
   arriereplan?: string | null;
+  contenantino?: IContenant | null;
 }
 
 export class Contenu implements IContenu {
@@ -18,7 +21,8 @@ export class Contenu implements IContenu {
     public absisce?: number | null,
     public ordonnee?: number | null,
     public arriereplanContentType?: string | null,
-    public arriereplan?: string | null
+    public arriereplan?: string | null,
+    public contenantino?: IContenant | null
   ) {}
 }
 

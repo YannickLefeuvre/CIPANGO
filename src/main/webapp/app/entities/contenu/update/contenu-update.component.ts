@@ -3,13 +3,15 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { IContenu, Contenu } from '../contenu.model';
 import { ContenuService } from '../service/contenu.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { IContenant } from 'app/entities/contenant/contenant.model';
+import { ContenantService } from 'app/entities/contenant/service/contenant.service';
 
 @Component({
   selector: 'jhi-contenu-update',
@@ -17,6 +19,8 @@ import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 })
 export class ContenuUpdateComponent implements OnInit {
   isSaving = false;
+
+  contenantsSharedCollection: IContenant[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -27,12 +31,14 @@ export class ContenuUpdateComponent implements OnInit {
     ordonnee: [],
     arriereplan: [],
     arriereplanContentType: [],
+    contenantino: [],
   });
 
   constructor(
     protected dataUtils: DataUtils,
     protected eventManager: EventManager,
     protected contenuService: ContenuService,
+    protected contenantService: ContenantService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -41,6 +47,8 @@ export class ContenuUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ contenu }) => {
       this.updateForm(contenu);
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -83,6 +91,10 @@ export class ContenuUpdateComponent implements OnInit {
     }
   }
 
+  trackContenantById(_index: number, item: IContenant): number {
+    return item.id!;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IContenu>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -112,7 +124,25 @@ export class ContenuUpdateComponent implements OnInit {
       ordonnee: contenu.ordonnee,
       arriereplan: contenu.arriereplan,
       arriereplanContentType: contenu.arriereplanContentType,
+      contenantino: contenu.contenantino,
     });
+
+    this.contenantsSharedCollection = this.contenantService.addContenantToCollectionIfMissing(
+      this.contenantsSharedCollection,
+      contenu.contenantino
+    );
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.contenantService
+      .query()
+      .pipe(map((res: HttpResponse<IContenant[]>) => res.body ?? []))
+      .pipe(
+        map((contenants: IContenant[]) =>
+          this.contenantService.addContenantToCollectionIfMissing(contenants, this.editForm.get('contenantino')!.value)
+        )
+      )
+      .subscribe((contenants: IContenant[]) => (this.contenantsSharedCollection = contenants));
   }
 
   protected createFromForm(): IContenu {
@@ -126,6 +156,7 @@ export class ContenuUpdateComponent implements OnInit {
       ordonnee: this.editForm.get(['ordonnee'])!.value,
       arriereplanContentType: this.editForm.get(['arriereplanContentType'])!.value,
       arriereplan: this.editForm.get(['arriereplan'])!.value,
+      contenantino: this.editForm.get(['contenantino'])!.value,
     };
   }
 }

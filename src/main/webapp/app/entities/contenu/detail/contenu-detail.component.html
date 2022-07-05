@@ -48,6 +48,12 @@
             {{ contenu.arriereplanContentType }}, {{ byteSize(contenu.arriereplan) }}
           </div>
         </dd>
+        <dt><span jhiTranslate="cipangoApp.contenu.contenantino">Contenantino</span></dt>
+        <dd>
+          <div *ngIf="contenu.contenantino">
+            <a [routerLink]="['/contenant', contenu.contenantino?.id, 'view']">{{ contenu.contenantino?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

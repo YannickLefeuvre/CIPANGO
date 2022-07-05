@@ -56,6 +56,7 @@ public class Contenant implements Serializable {
     private Lien lien;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = { "contenantino" }, allowSetters = true)
     private Contenu maison;
 
     @JsonIgnoreProperties(value = { "villeOrigine", "villeCible" }, allowSetters = true)
